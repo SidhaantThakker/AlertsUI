@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+    <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="query-builder">
+            <form action="/triggers" method="POST">
+                <div class="user-id-input">
+                    <div class="label"><label for="user_id">User ID</label></div>
+                        <input type="text" id="user_id" name="user_id" placeholder="User ID" required>
+                </div>
+                <div class="trigger-name-input">
+                    <div class="label"><label for="name">Trigger Name</label></div>
+                        <input type="text" id="name" name="name" placeholder="Trigger Name" required>
+                </div>
+                <div class="lhs-attribute-input">
+                    <div class="label"><label for="lhs_attribute">Attribute</label></div>
+                        <input type="text" id="lhs_attribute" name="lhs_attribute" placeholder="Attribute" required>
+                </div>
+                <div class="lhs-exchange-input">
+                    <div class="label"><label for="lhs_exchange">Exchange</label></div>
+                        <input type="text" id="lhs_exchange" name="lhs_exchange" placeholder="Exchange" required>
+                </div>
+                <div class="lhs-tradingsymbol-input">
+                    <div class="label"><label for="lhs_tradingsymbol">Symbol</label></div>
+                        <input type="text" id="lhs_tradingsymbol" name="lhs_tradingsymbol" placeholder="Symbol" required>
+                </div>
+                <div class="operator-input">
+                    <div class="label"><label for="name">Operator</label></div>
+                        <input type="text" id="operator" name="operator" placeholder="Operator" required>
+                </div>
+                <div class="rhs-type-input">
+                    <div class="label"><label for="rhs_type">Compare With</label></div>
+                        <input type="radio" id="Value" name="rhs_type" value="constant" checked> 
+                        <label for="Value">Value</label>
+                        <input type="radio" id="Instrument" name="rhs_type" value="instrument"> 
+                        <label for="Instrument" value="">Instrument</label>
+                </div>
+                <div id="rhs-params" class="rhs-params">
+                    <div class="rhs-constant-input">
+                        <div class="label"><label for="rhs_constant">Value</label></div>
+                        <input type="text" id="rhs_constant" name="rhs_constant" placeholder="Value" required>
+                    </div>
+                </div>
+                <div class="button">
+                    <button type="submit" class="btn btn-success custom-button submit-button">
+                      Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="trigger-list">
+            <% for(trigger of triggers){ %>
+                <div class="list-body">
+                    <div class="trigger-name">
+                        <%= trigger.name %>
+                    </div>
+                    <div class="trigger-status">
+                        <%= trigger.status %>
+                    </div>
+                    <div class="trigger-created-at">
+                        <%= trigger.created_at %>
+                    </div>
+                    <div class="trigger-lhs-attribute">
+                        <%= trigger.lhs_attribute %>
+                    </div>
+                    <div class="trigger-lhs-exchange">
+                        <%= trigger.lhs_exchange %>
+                    </div>
+                    <div class="trigger-lhs-tradingsymbol">
+                        <%= trigger.lhs_tradingsymbol %>
+                    </div>
+                    <div class="trigger-operator">
+                        <%= trigger.operator %>
+                    </div>
+                    <div class="trigger-type">
+                        <% if(trigger.rhs_type == "constant"){ %>
+                            <div class="trigger-rhs-constant">
+                                <%= trigger.rhs_constant %>
+                            </div>
+                        <% } else { %>
+                            <div class="trigger-rhs-attribute">
+                                <%= trigger.rhs_attribute %>
+                            </div>
+                            <div class="trigger-rhs-exchange">
+                                <%= trigger.rhs_exchange %>
+                            </div>
+                            <div class="trigger-rhs-tradingsymbol">
+                                <%= trigger.rhs_tradingsymbol %>
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="buttons">
+                        <div class="edit-button">
+                            <a
+                            href="/edit?uuid=<%- trigger.uuid %>"
+                            >Edit</i
+                            ></a>
+                        </div>
+                        <div class="delete-button-div">
+                            <form
+                            method="POST"
+                            action="/triggers/<%- trigger.uuid %>?_method=DELETE"
+                            >
+                                <input type="hidden" name="_method" value="delete" />
+                                <button type="submit" class="delete-button">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <% }; %>
+        </div>
+    </main>
+
+</body>
+<script type="text/javascript">
+    document.body.addEventListener('change', function (e) {
+            let rhs_params = document.getElementById('rhs-params');
+            let target = e.target;
+            if(target.id !=="Value" && target.id !== "Instrument"){
+                return;
+            }
+            let html_text = ``;
+            switch (target.id) {
+                case 'Value':
+                    html_text = `
+                    <div class="rhs-constant-input">
+                        <div class="label"><label for="rhs_constant">Value</label></div>
+                        <input type="text" id="rhs_constant" name="rhs_constant" placeholder="Value" required>
+                    </div>
+                    `;
+                    console.log("Value");
+                    break
+                case 'Instrument':
+                    html_text = `
+                    <div class="rhs-attribute-input">
+                        <div class="label"><label for="rhs_attribute">Attribute</label></div>
+                        <input type="text" id="rhs_attribute" name="rhs_attribute" placeholder="Attribute" required>
+                    </div>
+                    <div class="rhs-exchange-input">
+                        <div class="label"><label for="rhs_exchange">Exchange</label></div>
+                        <input type="text" id="rhs_exchange" name="rhs_exchange" placeholder="Exchange" required>
+                    </div>
+                    <div class="rhs-tradingsymbol-input">
+                        <div class="label"><label for="rhs_tradingsymbol">Symbol</label></div>
+                        <input type="text" id="rhs_tradingsymbol" name="rhs_tradingsymbol" placeholder="Symbol" required>
+                    </div>
+                    `;
+                    console.log("Instrument");
+                    break
+            }
+            rhs_params.innerHTML = html_text;
+    })
+
+</script>
+</html>

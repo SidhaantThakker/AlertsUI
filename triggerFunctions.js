@@ -82,7 +82,8 @@ const postTrigger = (req, res) => {
             throw err;
         }
         console.log(data)
-        res.status(201).send(`Trigger added with UUID : ${data.rows[0].uuid}`)
+        //res.status(201).send(`Trigger added with UUID : ${data.rows[0].uuid}`)
+        res.redirect("/");
     });
 }
 
@@ -108,6 +109,14 @@ const putTrigger = (req, res) => {
         rhs_tradingsymbol 
     } = req.body;
 
+    if(rhs_type == "constant"){
+        rhs_attribute = "";
+        rhs_exchange = "";
+        rhs_tradingsymbol = "";
+    }
+    if(rhs_type == "instrument"){
+        rhs_constant = "0.0"
+    }
     if(rhs_constant == ""){
         rhs_constant = "0.0"
     }
@@ -135,7 +144,8 @@ const putTrigger = (req, res) => {
         if (err) {
             throw err;
         }
-        res.status(200).send(`Trigger modified with UUID: ${uuid}`);
+        //res.status(200).send(`Trigger modified with UUID: ${uuid}`);
+        res.redirect("/");
     });
 }
 
@@ -149,7 +159,8 @@ const deleteTrigger = (req, res) => {
         if (err) {
             throw err;
         }
-        res.status(200).send(`Trigger deleted with UUID: ${uuid}`);
+        //res.status(200).send(`Trigger deleted with UUID: ${uuid}`);
+        res.redirect("/");
     });
 }
 

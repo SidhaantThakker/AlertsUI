@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+    <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="query-builder">
+            <form action="/triggers/<%- trigger.uuid %>?_method=PUT" method="POST"" method="POST">
+                <div class="user-id-input">
+                    <div class="label"><label for="user_id">User ID</label></div>
+                        <input type="text" id="user_id" name="user_id" placeholder="User ID" value="<%- trigger.user_id %>"required>
+                </div>
+                <div class="trigger-name-input">
+                    <div class="label"><label for="name">Trigger Name</label></div>
+                        <input type="text" id="name" name="name" placeholder="Trigger Name" value="<%- trigger.name %>" required>
+                </div>
+                <div class="lhs-attribute-input">
+                    <div class="label"><label for="lhs_attribute">Attribute</label></div>
+                        <input type="text" id="lhs_attribute" name="lhs_attribute" placeholder="Attribute" value="<%- trigger.lhs_attribute %>" required>
+                </div>
+                <div class="lhs-exchange-input">
+                    <div class="label"><label for="lhs_exchange">Exchange</label></div>
+                        <input type="text" id="lhs_exchange" name="lhs_exchange" placeholder="Exchange" value="<%- trigger.lhs_exchange %>" required>
+                </div>
+                <div class="lhs-tradingsymbol-input">
+                    <div class="label"><label for="lhs_tradingsymbol">Symbol</label></div>
+                        <input type="text" id="lhs_tradingsymbol" name="lhs_tradingsymbol" placeholder="Symbol" value="<%- trigger.lhs_tradingsymbol %>" required>
+                </div>
+                <div class="operator-input">
+                    <div class="label"><label for="name">Operator</label></div>
+                        <input type="text" id="operator" name="operator" placeholder="Operator" value="<%- trigger.operator %>" required>
+                </div>
+                <div class="rhs-type-input">
+                    <div class="label"><label for="rhs_type">Compare With</label></div>
+                    <% if(trigger.rhs_type == "constant"){ %>
+                        <input type="radio" id="Value" name="rhs_type" value="constant" checked> 
+                        <label for="Value">Value</label>
+                        <input type="radio" id="Instrument" name="rhs_type" value="instrument"> 
+                        <label for="Instrument" value="">Instrument</label>
+                    <% } else { %>
+                        <input type="radio" id="Value" name="rhs_type" value="constant"> 
+                        <label for="Value">Value</label>
+                        <input type="radio" id="Instrument" name="rhs_type" value="instrument" checked> 
+                        <label for="Instrument" value="">Instrument</label>
+                    <% } %>
+
+                </div>
+                <div id="rhs-params" class="rhs-params">
+                    <% if(trigger.rhs_type == "constant"){ %>
+                        <div class="rhs-constant-input">
+                            <div class="label"><label for="rhs_constant">Value</label></div>
+                            <input type="text" id="rhs_constant" name="rhs_constant" placeholder="Value" value="<%- trigger.rhs_constant %>" required>
+                        </div>
+                    <% } else { %>
+                        <div class="rhs-attribute-input">
+                            <div class="label"><label for="rhs_attribute">Attribute</label></div>
+                            <input type="text" id="rhs_attribute" name="rhs_attribute" placeholder="Attribute" value="<%- trigger.rhs_attribute %>" required>
+                        </div>
+                        <div class="rhs-exchange-input">
+                            <div class="label"><label for="rhs_exchange">Exchange</label></div>
+                            <input type="text" id="rhs_exchange" name="rhs_exchange" placeholder="Exchange" value="<%- trigger.rhs_exchange %>" required>
+                        </div>
+                        <div class="rhs-tradingsymbol-input">
+                            <div class="label"><label for="rhs_tradingsymbol">Symbol</label></div>
+                            <input type="text" id="rhs_tradingsymbol" name="rhs_tradingsymbol" placeholder="Symbol" value="<%- trigger.rhs_tradingsymbol %>" required>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="button">
+                    <button type="submit" class="btn btn-success custom-button submit-button">
+                      Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</body>
+<script type="text/javascript">
+    document.body.addEventListener('change', function (e) {
+            let rhs_params = document.getElementById('rhs-params');
+            let target = e.target;
+            if(target.id !=="Value" && target.id !== "Instrument"){
+                return;
+            }
+            let html_text = ``;
+            switch (target.id) {
+                case 'Value':
+                    html_text = `
+                    <div class="rhs-constant-input">
+                        <div class="label"><label for="rhs_constant">Value</label></div>
+                        <input type="text" id="rhs_constant" name="rhs_constant" placeholder="Value" value="<%- trigger.rhs_constant %>" required>
+                    </div>
+                    `;
+                    console.log("Value");
+                    break
+                case 'Instrument':
+                    html_text = `
+                    <div class="rhs-attribute-input">
+                        <div class="label"><label for="rhs_attribute">Attribute</label></div>
+                        <input type="text" id="rhs_attribute" name="rhs_attribute" placeholder="Attribute" value="<%- trigger.rhs_attribute %>" required>
+                    </div>
+                    <div class="rhs-exchange-input">
+                        <div class="label"><label for="rhs_exchange">Exchange</label></div>
+                        <input type="text" id="rhs_exchange" name="rhs_exchange" placeholder="Exchange" value="<%- trigger.rhs_exchange %>" required>
+                    </div>
+                    <div class="rhs-tradingsymbol-input">
+                        <div class="label"><label for="rhs_tradingsymbol">Symbol</label></div>
+                        <input type="text" id="rhs_tradingsymbol" name="rhs_tradingsymbol" placeholder="Symbol" value="<%- trigger.rhs_tradingsymbol %>" required>
+                    </div>
+                    `;
+                    console.log("Instrument");
+                    break
+            }
+            rhs_params.innerHTML = html_text;
+    })
+
+</script>
+</html>
