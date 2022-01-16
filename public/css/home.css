@@ -1,0 +1,225 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
+:root {
+  --border: rgba(0, 0, 0, 0.1);
+  --padding: 1.5rem;
+  --primary: #4184f3;
+  --text-alt: rgba(0, 0, 0, 0.5);
+  --alert: rgb(214, 80, 80);
+}
+
+input[type="text"] {
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  transition: 100ms ease-in-out;
+  margin: 0.4rem;
+  margin-top: 0;
+  margin-left: 0;
+  width: 250px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border: 1px solid rgb(58, 112, 194);
+}
+
+input[type="text"]::placeholder {
+  color: var(--text-alt);
+}
+
+main {
+  width: 100%;
+  display: grid;
+  grid-template-columns: calc(600px + 2rem) calc(100vw - 600px);
+}
+
+.heading {
+  font-size: 1.3rem;
+  padding: var(--padding);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.733);
+}
+
+.user-id {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.user-id > input {
+  width: auto;
+}
+
+.navbar {
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgb(248, 248, 248);
+  /* border-bottom: 1px solid rgba(189, 189, 189, 0.26); */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.158);
+}
+
+.lhs-exchange > input:nth-of-type(1) {
+  border-right: none;
+  width: 100px;
+  margin-right: 0;
+  border-radius: 0.25rem 0rem 0rem 0.25rem;
+  transform: translateX(2px);
+}
+
+.lhs-exchange > input:nth-of-type(2) {
+  border-left: none;
+  margin-left: 0;
+  transform: translateX(-2px);
+  width: 150px;
+  border-radius: 0rem 0.25rem 0.25rem 0rem;
+}
+
+.lhs-exchange {
+  position: relative;
+}
+
+.lhs-exchange > span {
+  z-index: 2;
+  position: absolute;
+  top: 45%;
+}
+
+.trigger-name > input {
+  width: 50%;
+}
+
+.trigger-name {
+  position: relative;
+  padding: var(--padding);
+}
+
+.input-fields {
+  padding: var(--padding);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+label {
+  color: var(--text-alt);
+}
+
+.rhs-type {
+  display: flex;
+  gap: 1rem;
+}
+
+.instru-radio > label,
+.value-radio > label {
+  color: black;
+}
+
+.query-builder {
+  width: 600px;
+  border: 1px solid var(--border);
+  margin: 1rem;
+  border-radius: 0.25rem;
+}
+
+.button {
+  border-top: 1px solid var(--border);
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: var(--padding);
+}
+
+.button > button {
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  padding: 0.7rem;
+  border-radius: 0.25rem;
+  width: 100px;
+  transition: 100ms ease-in-out;
+  cursor: pointer;
+}
+
+.button > button:hover {
+  background-color: rgb(58, 111, 211);
+}
+
+.trigger-list {
+  height: 92vh;
+  overflow-y: scroll;
+  border-left: 1px solid var(--border);
+}
+
+.list-body {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  border-bottom: 1px solid var(--border);
+  place-items: center;
+  margin: 0.3rem;
+}
+
+.cell {
+  display: table-cell;
+  padding: 0.5rem;
+}
+
+.delete-button,
+.edit-button {
+  font-weight: 500;
+  border-radius: 0.4rem;
+  padding: 0.25rem;
+  width: 5rem;
+  transition: 200ms;
+}
+
+.delete-button {
+  border: 1px solid var(--alert);
+  color: var(--alert);
+  background-color: white;
+}
+
+.delete-button:hover {
+  color: white;
+  background-color: var(--alert);
+}
+
+.edit-button {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  text-align: center;
+}
+
+.edit-button:hover {
+  color: white;
+  background-color: var(--primary);
+}
+
+.edit-button:hover > a {
+  color: white;
+}
+
+.edit-button > a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.edit-button > a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-right: 2em;
+}
